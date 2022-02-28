@@ -151,7 +151,7 @@ body {
   box-shadow: 4px 4px 4px #7a7979;
 }
 
-.calc_result {
+/* .calc_result {
   grid-column: 1/-1;
   background-color: rgba(0, 0, 0, 0.596);
   padding: 20px;
@@ -161,7 +161,8 @@ body {
   align-items: center;
   display: flex;
   overflow: hidden;
-}
+} */
+
 .calc_screen {
   height: 125px;
   padding: 10px;
