@@ -1,25 +1,84 @@
-const calc = document.querySelector('.calc');
-const result = document.querySelector('#result')
+let a = ''; //first number	
+let b = ''; //second number
+let sign = ''; // знак операции
+let finish = false;
 
-calc.addEventListener('click', function(event) {
+const digit = ['0', '1', '2', '3', '4', '5', '6',  '7', '8',  '9', '.' ];
+const action = ['-', '+',  'x', '/' ];
+
+const out = document.querySelector('#result');
+
+function clearAll () {
+	a = '';
+	b = '';
+	sign = '';
+	finish = false;
+	out.textContent = 0;
+}
+
+document.querySelector('.ac').onclick = clearAll;
+document.querySelector('.buttons').onclick = (event) => {
+	// нажата не кнопка
 	if(!event.target.classList.contains('btn')) return;
+	// нажата кнопка AC
+	if(event.target.classList.contains('ac')) return;
+	out.textContent = '';
 
-	const value = event.target.innerText;
-
-	switch(value) {
-	case 'AC':
-		result.innerText = " ";
-		break;
-		
-	case '=':
-		result.innerText = eval(result.innerText).toFixed(2);
-		break;
-
-		default:
-			result.innerText += value;
+	const key = event.target.innerText;
+	// если нажата клавиша 0-9 -
+	if (digit.includes(key)){
+		if (b === '' && sign === ''){
+		a+=key;
+		console.log(a, b, sign);
+		out.textContent = a;
+		}
+		else if (a!=='' && b!=='' && finish) {
+			b = key;
+			finish = false;
+			out.textContent = b;
+		}
+		else {
+			b += key;
+			out.textContent = b;	
+		}
+		console.log(a, b, sign);
+		return;
 	}
-});
+	// если нажата клавиша +-/*
+	if (action.includes(key)) {
+		sign = key;
+		out.textContent = sign;
+		console.log(a, b, sign);
+		return;
+	}
 
-
-
-
+	// нажато = 
+	if (key === '=') {
+		if (b ==='') b = a;
+		switch (sign){
+			case '+':
+				a = (+a) + (+b);
+				break;
+			case '-':
+				a = a - b;
+				break;
+			case 'x':
+				a = a * b;
+				break;
+			case '/':
+				if (b === '0') {
+					out.textContent = 'error';
+					a = '';
+					b = '';
+					sign = '';
+					return;
+				}
+				a = a / b;
+				break;
+		}
+		finish = true;
+		out.textContent = a;
+		console.log(a, b, sign);
+	}
+}
+  
